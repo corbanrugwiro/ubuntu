@@ -34,7 +34,7 @@ const Privacy = () => {
                 </p>
                 <ul className="list-disc list-inside text-muted-foreground space-y-2">
                   <li>Create and manage your account</li>
-                  <li>Process your transactions and referral commissions</li>
+                  <li>Process your transactions and referral commissions via MTN Mobile Money</li>
                   <li>Send you updates about your account and our services</li>
                   <li>Respond to your comments, questions, and requests</li>
                   <li>Detect and prevent fraud and abuse</li>
@@ -82,7 +82,7 @@ const Privacy = () => {
               <section>
                 <h2 className="text-2xl font-semibold text-foreground mb-4">7. Contact Us</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  If you have any questions about this Privacy Policy, please contact us at privacy@ubuntu.com.
+                  If you have any questions about this Privacy Policy, please contact us at privacy@ubuntu.rw.
                 </p>
               </section>
             </div>

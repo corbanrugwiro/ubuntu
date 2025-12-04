@@ -42,7 +42,7 @@ const Terms = () => {
                 </p>
                 <ul className="list-disc list-inside text-muted-foreground space-y-2">
                   <li>Create an account with accurate information</li>
-                  <li>Make an initial deposit of ₦2,000 to activate your membership</li>
+                  <li>Make an initial deposit of 2,000 RWF via MTN Mobile Money to activate your membership</li>
                   <li>Maintain the security of your account credentials</li>
                   <li>Notify us immediately of any unauthorized access</li>
                 </ul>
@@ -54,7 +54,7 @@ const Terms = () => {
                   Our referral program allows you to earn commissions by referring new users:
                 </p>
                 <ul className="list-disc list-inside text-muted-foreground space-y-2">
-                  <li>You earn 20% (₦400) of each successful referral's deposit</li>
+                  <li>You earn 20% (400 RWF) of each successful referral's deposit</li>
                   <li>Commissions are credited after the referred user completes their deposit</li>
                   <li>Self-referrals are not permitted</li>
                   <li>Fraudulent referrals will result in account termination</li>
@@ -64,8 +64,8 @@ const Terms = () => {
               <section>
                 <h2 className="text-2xl font-semibold text-foreground mb-4">5. Withdrawals</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  You may withdraw your earnings at any time, subject to our withdrawal processing times 
-                  (typically 24 hours). Minimum withdrawal amount is ₦500. We reserve the right to verify 
+                  You may withdraw your earnings at any time via MTN Mobile Money, subject to our withdrawal processing times 
+                  (typically 24 hours). Minimum withdrawal amount is 500 RWF. We reserve the right to verify 
                   your identity before processing withdrawals.
                 </p>
               </section>
@@ -103,7 +103,7 @@ const Terms = () => {
               <section>
                 <h2 className="text-2xl font-semibold text-foreground mb-4">9. Contact Us</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  If you have any questions about these Terms of Service, please contact us at legal@ubuntu.com.
+                  If you have any questions about these Terms of Service, please contact us at legal@ubuntu.rw.
                 </p>
               </section>
             </div>

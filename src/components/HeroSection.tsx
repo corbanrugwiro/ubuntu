@@ -30,7 +30,7 @@ const HeroSection = () => {
 
           {/* Subheadline */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-up opacity-0 stagger-2">
-            Deposit ₦2,000 to join Ubuntu and earn 20% commission (₦400) for every friend you refer. 
+            Deposit 2,000 RWF to join Ubuntu and earn 20% commission (400 RWF) for every friend you refer. 
             Build your network, build your income.
           </p>
 
@@ -55,7 +55,7 @@ const HeroSection = () => {
                   <Coins className="h-6 w-6 text-primary" />
                 </div>
               </div>
-              <p className="text-3xl font-bold text-foreground">₦2,000</p>
+              <p className="text-3xl font-bold text-foreground">2,000 RWF</p>
               <p className="text-sm text-muted-foreground">Entry Deposit</p>
             </div>
             <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6">
@@ -70,10 +70,10 @@ const HeroSection = () => {
             <div className="col-span-2 md:col-span-1 bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6">
               <div className="flex items-center justify-center mb-3">
                 <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <span className="text-xl font-bold text-primary">₦</span>
+                  <span className="text-lg font-bold text-primary">RWF</span>
                 </div>
               </div>
-              <p className="text-3xl font-bold text-foreground">₦400</p>
+              <p className="text-3xl font-bold text-foreground">400 RWF</p>
               <p className="text-sm text-muted-foreground">Earn Per Friend</p>
             </div>
           </div>

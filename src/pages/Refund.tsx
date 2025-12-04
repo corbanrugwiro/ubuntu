@@ -22,7 +22,7 @@ const Refund = () => {
               <section>
                 <h2 className="text-2xl font-semibold text-foreground mb-4">1. Entry Deposit Refunds</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  The initial ₦2,000 entry deposit is non-refundable once your account has been activated. 
+                  The initial 2,000 RWF entry deposit is non-refundable once your account has been activated. 
                   This deposit activates your membership and referral capabilities on the Ubuntu platform.
                 </p>
               </section>
@@ -39,7 +39,7 @@ const Refund = () => {
               <section>
                 <h2 className="text-2xl font-semibold text-foreground mb-4">3. Commission Withdrawals</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Earned commissions can be withdrawn at any time and are not subject to this refund policy. 
+                  Earned commissions can be withdrawn at any time via MTN Mobile Money and are not subject to this refund policy. 
                   Once a withdrawal is processed, it cannot be reversed.
                 </p>
               </section>
@@ -62,7 +62,7 @@ const Refund = () => {
                   To request a refund:
                 </p>
                 <ul className="list-disc list-inside text-muted-foreground space-y-2">
-                  <li>Contact our support team at refunds@ubuntu.com</li>
+                  <li>Contact our support team at refunds@ubuntu.rw</li>
                   <li>Provide your account email and transaction details</li>
                   <li>State the reason for your refund request</li>
                   <li>Allow up to 7 business days for review</li>
@@ -72,8 +72,8 @@ const Refund = () => {
               <section>
                 <h2 className="text-2xl font-semibold text-foreground mb-4">6. Refund Timeline</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Approved refunds will be processed within 7-14 business days and credited to the original 
-                  payment method used for the deposit.
+                  Approved refunds will be processed within 7-14 business days and credited to your 
+                  MTN Mobile Money account.
                 </p>
               </section>
 
@@ -89,7 +89,7 @@ const Refund = () => {
                 <h2 className="text-2xl font-semibold text-foreground mb-4">8. Contact Us</h2>
                 <p className="text-muted-foreground leading-relaxed">
                   For any questions about our refund policy or to request a refund, please contact us at 
-                  refunds@ubuntu.com or through our support portal.
+                  refunds@ubuntu.rw or through our support portal.
                 </p>
               </section>
             </div>
