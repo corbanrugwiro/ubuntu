@@ -5,25 +5,25 @@ const HowItWorks = () => {
     {
       icon: UserPlus,
       title: "Sign Up & Deposit",
-      description: "Create your account and make an initial deposit of ₦2,000 to activate your membership.",
+      description: "Create your account and make an initial deposit of 2,000 RWF via MTN Mobile Money to activate your membership.",
       step: "01",
     },
     {
       icon: Share2,
       title: "Share Your Link",
-      description: "Get your unique referral link and share it with friends, family, and your network.",
+      description: "Get your unique referral code and share it with friends, family, and your network.",
       step: "02",
     },
     {
       icon: Wallet,
       title: "Earn Commissions",
-      description: "Receive 20% (₦400) instantly for every person who joins using your referral link.",
+      description: "Receive 20% (400 RWF) instantly for every person who joins using your referral code.",
       step: "03",
     },
     {
       icon: TrendingUp,
       title: "Grow & Withdraw",
-      description: "Watch your earnings grow and withdraw your funds anytime to your bank account.",
+      description: "Watch your earnings grow and withdraw your funds anytime via MTN Mobile Money.",
       step: "04",
     },
   ];

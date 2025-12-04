@@ -1,14 +1,18 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Register = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const referralFromUrl = searchParams.get("ref") || "";
+  
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
@@ -17,7 +21,7 @@ const Register = () => {
     email: "",
     phone: "",
     password: "",
-    referralCode: "",
+    referralCode: referralFromUrl,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -32,17 +36,54 @@ const Register = () => {
       return;
     }
 
+    if (formData.password.length < 6) {
+      toast({
+        title: "Password Too Short",
+        description: "Password must be at least 6 characters.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
 
-    // Simulate registration
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/dashboard`,
+          data: {
+            full_name: formData.fullName,
+            phone: formData.phone,
+            referred_by: formData.referralCode || null,
+          },
+        },
+      });
+
+      if (error) {
+        toast({
+          title: "Registration Failed",
+          description: error.message,
+          variant: "destructive",
+        });
+        return;
+      }
+
       toast({
         title: "Account Created!",
-        description: "Your account has been created. Please make your deposit to activate.",
+        description: "Please make your deposit to activate your account.",
       });
-      navigate("/login");
-    }, 1500);
+      navigate("/dashboard");
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -72,8 +113,8 @@ const Register = () => {
           {/* Entry Fee Notice */}
           <div className="bg-primary/10 border border-primary/20 rounded-xl p-4 mb-6">
             <p className="text-sm text-foreground text-center">
-              <span className="font-semibold">Entry Deposit:</span> ₦2,000 · 
-              <span className="text-primary font-semibold"> Earn ₦400 per referral</span>
+              <span className="font-semibold">Entry Deposit:</span> 2,000 RWF · 
+              <span className="text-primary font-semibold"> Earn 400 RWF per referral</span>
             </p>
           </div>
 
@@ -105,11 +146,11 @@ const Register = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
+              <Label htmlFor="phone">Phone Number (MTN)</Label>
               <Input
                 id="phone"
                 type="tel"
-                placeholder="Enter your phone number"
+                placeholder="e.g., 078XXXXXXX"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 required
@@ -146,7 +187,7 @@ const Register = () => {
                 type="text"
                 placeholder="Enter referral code if you have one"
                 value={formData.referralCode}
-                onChange={(e) => setFormData({ ...formData, referralCode: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, referralCode: e.target.value.toUpperCase() })}
                 className="h-12"
               />
             </div>

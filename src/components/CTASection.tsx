@@ -26,7 +26,7 @@ const CTASection = () => {
 
           {/* Description */}
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
-            Join Ubuntu today with just ₦2,000 and start earning ₦400 for every friend you refer. 
+            Join Ubuntu today with just 2,000 RWF and start earning 400 RWF for every friend you refer. 
             Your network is your net worth.
           </p>
 
