@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Users, Coins } from "lucide-react";
+import { ArrowRight, Users, Coins, Play, Instagram } from "lucide-react";
 
 const HeroSection = () => {
   return (
@@ -19,19 +19,19 @@ const HeroSection = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
-            <span className="text-sm font-medium">Earn while you share</span>
+            <span className="text-sm font-medium">Earn while you scroll</span>
           </div>
 
           {/* Headline */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight mb-6 animate-fade-up opacity-0 stagger-1">
-            Grow Your Wealth
-            <span className="block text-gradient">Through Community</span>
+            Watch, Follow & Earn
+            <span className="block text-gradient">Real Money</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-up opacity-0 stagger-2">
-            Deposit 2,000 RWF to join Ubuntu and earn 20% commission (400 RWF) for every friend you refer. 
-            Build your network, build your income.
+            Watch TikTok videos, follow Instagram accounts, and watch reels to earn money. 
+            Plus earn 20% commission for every friend you refer!
           </p>
 
           {/* CTA Buttons */}
@@ -43,38 +43,47 @@ const HeroSection = () => {
               </Link>
             </Button>
             <Button variant="hero-outline" size="xl" asChild>
-              <Link to="/#how-it-works">Learn How It Works</Link>
+              <Link to="/how-it-works">Learn How It Works</Link>
             </Button>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-2xl mx-auto animate-fade-up opacity-0 stagger-4">
-            <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6">
-              <div className="flex items-center justify-center mb-3">
-                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <Coins className="h-6 w-6 text-primary" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto animate-fade-up opacity-0 stagger-4">
+            <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-5">
+              <div className="flex items-center justify-center mb-2">
+                <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <Coins className="h-5 w-5 text-primary" />
                 </div>
               </div>
-              <p className="text-3xl font-bold text-foreground">2,000 RWF</p>
-              <p className="text-sm text-muted-foreground">Entry Deposit</p>
+              <p className="text-2xl font-bold text-foreground">3,000</p>
+              <p className="text-xs text-muted-foreground">RWF Min Deposit</p>
             </div>
-            <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6">
-              <div className="flex items-center justify-center mb-3">
-                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <Users className="h-6 w-6 text-primary" />
+            <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-5">
+              <div className="flex items-center justify-center mb-2">
+                <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <Play className="h-5 w-5 text-primary" />
                 </div>
               </div>
-              <p className="text-3xl font-bold text-foreground">20%</p>
-              <p className="text-sm text-muted-foreground">Per Referral</p>
+              <p className="text-2xl font-bold text-foreground">50+</p>
+              <p className="text-xs text-muted-foreground">RWF Per Task</p>
             </div>
-            <div className="col-span-2 md:col-span-1 bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6">
-              <div className="flex items-center justify-center mb-3">
-                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <span className="text-lg font-bold text-primary">RWF</span>
+            <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-5">
+              <div className="flex items-center justify-center mb-2">
+                <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <Users className="h-5 w-5 text-primary" />
                 </div>
               </div>
-              <p className="text-3xl font-bold text-foreground">400 RWF</p>
-              <p className="text-sm text-muted-foreground">Earn Per Friend</p>
+              <p className="text-2xl font-bold text-foreground">20%</p>
+              <p className="text-xs text-muted-foreground">Referral Bonus</p>
+            </div>
+            <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-5">
+              <div className="flex items-center justify-center mb-2">
+                <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <Instagram className="h-5 w-5 text-primary" />
+                </div>
+              </div>
+              <p className="text-2xl font-bold text-foreground">5 min</p>
+              <p className="text-xs text-muted-foreground">Withdrawal Time</p>
             </div>
           </div>
         </div>

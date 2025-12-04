@@ -1,29 +1,31 @@
-import { UserPlus, Share2, Wallet, TrendingUp } from "lucide-react";
+import { UserPlus, Share2, Wallet, TrendingUp, Play } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const HowItWorks = () => {
   const steps = [
     {
       icon: UserPlus,
       title: "Sign Up & Deposit",
-      description: "Create your account and make an initial deposit of 2,000 RWF via MTN Mobile Money to activate your membership.",
+      description: "Create your account and make an initial deposit starting from 3,000 RWF via MTN Mobile Money.",
       step: "01",
+    },
+    {
+      icon: Play,
+      title: "Complete Tasks",
+      description: "Watch TikToks, follow Instagram accounts, and watch reels to earn rewards.",
+      step: "02",
     },
     {
       icon: Share2,
       title: "Share Your Link",
-      description: "Get your unique referral code and share it with friends, family, and your network.",
-      step: "02",
-    },
-    {
-      icon: Wallet,
-      title: "Earn Commissions",
-      description: "Receive 20% (400 RWF) instantly for every person who joins using your referral code.",
+      description: "Get your unique referral code and share it with friends to earn 20% commission.",
       step: "03",
     },
     {
-      icon: TrendingUp,
-      title: "Grow & Withdraw",
-      description: "Watch your earnings grow and withdraw your funds anytime via MTN Mobile Money.",
+      icon: Wallet,
+      title: "Withdraw Earnings",
+      description: "Withdraw your earnings (min 10,000 RWF) via MTN Mobile Money within 5 minutes.",
       step: "04",
     },
   ];
@@ -45,7 +47,7 @@ const HowItWorks = () => {
         </div>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {steps.map((step, index) => (
             <div
               key={step.title}
@@ -78,6 +80,15 @@ const HowItWorks = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* CTA */}
+        <div className="text-center">
+          <Link to="/how-it-works">
+            <Button variant="outline" size="lg">
+              Learn More
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

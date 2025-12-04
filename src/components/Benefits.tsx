@@ -1,36 +1,38 @@
-import { Shield, Zap, Clock, Gift, HeartHandshake, BadgeCheck } from "lucide-react";
+import { Shield, Zap, Clock, Gift, HeartHandshake, BadgeCheck, Play, Instagram } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const Benefits = () => {
   const benefits = [
     {
       icon: Zap,
       title: "Instant Earnings",
-      description: "Your 20% commission is credited to your account instantly when your referral completes their deposit.",
+      description: "Your task rewards and referral commissions are credited instantly to your account.",
     },
     {
       icon: Shield,
       title: "Secure Platform",
-      description: "Your funds and data are protected with bank-level security measures and encryption.",
+      description: "Your funds and data are protected with bank-level security measures.",
     },
     {
       icon: Clock,
-      title: "Quick Withdrawals",
-      description: "Withdraw your earnings at any time directly to your bank account within 24 hours.",
+      title: "5-Minute Withdrawals",
+      description: "Withdraw your earnings directly to your MTN Mobile Money within 5 minutes.",
+    },
+    {
+      icon: Play,
+      title: "Fun Tasks",
+      description: "Earn by watching TikTok videos and Instagram reels - it doesn't feel like work!",
+    },
+    {
+      icon: Instagram,
+      title: "Social Rewards",
+      description: "Get paid to follow interesting Instagram accounts and discover new content.",
     },
     {
       icon: Gift,
       title: "No Limits",
-      description: "There's no cap on how much you can earn. The more you refer, the more you make.",
-    },
-    {
-      icon: HeartHandshake,
-      title: "Community Support",
-      description: "Join a thriving community of earners and get support whenever you need it.",
-    },
-    {
-      icon: BadgeCheck,
-      title: "Transparent System",
-      description: "Track all your referrals, earnings, and withdrawals in real-time on your dashboard.",
+      description: "There's no cap on how much you can earn. Complete more tasks to earn more.",
     },
   ];
 
@@ -46,12 +48,12 @@ const Benefits = () => {
             Benefits of Joining
           </h2>
           <p className="text-muted-foreground text-lg">
-            Ubuntu offers more than just referral bonuses. Here's why thousands trust us.
+            Ubuntu offers multiple ways to earn money. Here's why thousands trust us.
           </p>
         </div>
 
         {/* Benefits Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {benefits.map((benefit, index) => (
             <div
               key={benefit.title}
@@ -72,6 +74,15 @@ const Benefits = () => {
               </p>
             </div>
           ))}
+        </div>
+
+        {/* CTA */}
+        <div className="text-center">
+          <Link to="/benefits">
+            <Button variant="outline" size="lg">
+              See All Benefits
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

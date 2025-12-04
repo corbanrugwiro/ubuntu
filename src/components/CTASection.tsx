@@ -26,8 +26,8 @@ const CTASection = () => {
 
           {/* Description */}
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
-            Join Ubuntu today with just 2,000 RWF and start earning 400 RWF for every friend you refer. 
-            Your network is your net worth.
+            Join Ubuntu today with just 3,000 RWF and start earning by watching TikToks, following Instagram accounts, and referring friends. 
+            Withdraw your earnings to MTN Mobile Money within 5 minutes!
           </p>
 
           {/* CTA */}
