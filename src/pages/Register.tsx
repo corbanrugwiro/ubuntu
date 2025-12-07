@@ -113,8 +113,8 @@ const Register = () => {
           {/* Entry Fee Notice */}
           <div className="bg-primary/10 border border-primary/20 rounded-xl p-4 mb-6">
             <p className="text-sm text-foreground text-center">
-              <span className="font-semibold">Entry Deposit:</span> 2,000 RWF · 
-              <span className="text-primary font-semibold"> Earn 400 RWF per referral</span>
+              <span className="font-semibold">Minimum Deposit:</span> 3,000 RWF · 
+              <span className="text-primary font-semibold"> Earn 20% per referral</span>
             </p>
           </div>
 
