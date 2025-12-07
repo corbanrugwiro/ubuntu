@@ -49,6 +49,7 @@ interface Task {
 
 interface TaskCompletion {
   task_id: string;
+  completed_at: string;
 }
 
 const MTN_MERCHANT_CODE = "1905537";
@@ -62,6 +63,7 @@ const Dashboard = () => {
   const [referrals, setReferrals] = useState<ReferralEarning[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [completedTasks, setCompletedTasks] = useState<Set<string>>(new Set());
+  const [dailyTasksCompleted, setDailyTasksCompleted] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [depositAmount, setDepositAmount] = useState("3000");
@@ -128,11 +130,20 @@ const Dashboard = () => {
     // Fetch completed tasks
     const { data: completionsData } = await supabase
       .from("task_completions")
-      .select("task_id")
+      .select("task_id, completed_at")
       .eq("user_id", session.user.id);
 
     if (completionsData) {
       setCompletedTasks(new Set(completionsData.map(c => c.task_id)));
+      
+      // Count today's completions
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const todayCount = completionsData.filter(c => {
+        const completedDate = new Date(c.completed_at);
+        return completedDate >= today;
+      }).length;
+      setDailyTasksCompleted(todayCount);
     }
 
     setIsLoading(false);
@@ -201,6 +212,15 @@ const Dashboard = () => {
       toast({
         title: "Already Completed",
         description: "You've already completed this task.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (dailyTasksCompleted >= 20) {
+      toast({
+        title: "Daily Limit Reached",
+        description: "You've completed your 20 tasks for today. Come back tomorrow!",
         variant: "destructive",
       });
       return;
@@ -474,15 +494,33 @@ const Dashboard = () => {
         {/* Tasks Tab */}
         {activeTab === "tasks" && (
           <div className="bg-background border border-border rounded-2xl p-6">
-            <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-              <Play className="h-5 w-5 text-primary" />
-              Available Tasks
-            </h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-semibold text-foreground flex items-center gap-2">
+                <Play className="h-5 w-5 text-primary" />
+                Available Tasks
+              </h2>
+              <div className="flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full">
+                <span className="text-sm font-medium text-foreground">
+                  {dailyTasksCompleted}/20 today
+                </span>
+                {dailyTasksCompleted >= 20 && (
+                  <span className="text-xs text-primary">Limit reached</span>
+                )}
+              </div>
+            </div>
 
             {!profile?.is_active && (
               <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-4 mb-6">
                 <p className="text-yellow-600 dark:text-yellow-400 text-sm">
                   ⚠️ Activate your account with a deposit to start completing tasks and earning!
+                </p>
+              </div>
+            )}
+
+            {dailyTasksCompleted >= 20 && (
+              <div className="bg-primary/10 border border-primary/20 rounded-xl p-4 mb-6">
+                <p className="text-primary text-sm">
+                  🎉 Great job! You've completed all 20 tasks for today. Come back tomorrow for more!
                 </p>
               </div>
             )}
@@ -526,7 +564,7 @@ const Dashboard = () => {
                             <Button
                               size="sm"
                               variant={isCompleted ? "outline" : "default"}
-                              disabled={isCompleted || !profile?.is_active}
+                              disabled={isCompleted || !profile?.is_active || dailyTasksCompleted >= 20}
                               onClick={() => handleCompleteTask(task)}
                             >
                               {isCompleted ? (
