@@ -20,7 +20,13 @@ import {
   Users,
   Wallet,
   Check,
-  X
+  X,
+  TrendingUp,
+  TrendingDown,
+  ArrowUpDown,
+  DollarSign,
+  PiggyBank,
+  BarChart3
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -45,13 +51,34 @@ interface WithdrawalRequest {
   created_at: string;
 }
 
+interface Analytics {
+  grossIncome: number;
+  totalWithdrawals: number;
+  netIncome: number;
+  profits: number;
+  totalTransactions: number;
+  pendingWithdrawals: number;
+  activeAccounts: number;
+  totalAccountsBalance: number;
+}
+
 const Admin = () => {
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [withdrawals, setWithdrawals] = useState<WithdrawalRequest[]>([]);
-  const [activeTab, setActiveTab] = useState<"tasks" | "withdrawals">("tasks");
+  const [activeTab, setActiveTab] = useState<"analytics" | "tasks" | "withdrawals">("analytics");
+  const [analytics, setAnalytics] = useState<Analytics>({
+    grossIncome: 0,
+    totalWithdrawals: 0,
+    netIncome: 0,
+    profits: 0,
+    totalTransactions: 0,
+    pendingWithdrawals: 0,
+    activeAccounts: 0,
+    totalAccountsBalance: 0,
+  });
   
   // New task form
   const [newTask, setNewTask] = useState({
@@ -117,7 +144,55 @@ const Admin = () => {
       setWithdrawals(withdrawalData);
     }
 
+    // Fetch analytics data
+    await fetchAnalytics();
+
     setIsLoading(false);
+  };
+
+  const fetchAnalytics = async () => {
+    // Get all completed deposits (gross income)
+    const { data: deposits } = await supabase
+      .from("deposits")
+      .select("amount, status");
+    
+    const completedDeposits = deposits?.filter(d => d.status === "completed") || [];
+    const grossIncome = completedDeposits.reduce((sum, d) => sum + Number(d.amount), 0);
+    const totalTransactions = deposits?.length || 0;
+
+    // Get all completed withdrawals
+    const { data: allWithdrawals } = await supabase
+      .from("withdrawal_requests")
+      .select("amount, status");
+    
+    const completedWithdrawals = allWithdrawals?.filter(w => w.status === "completed") || [];
+    const totalWithdrawalsAmount = completedWithdrawals.reduce((sum, w) => sum + Number(w.amount), 0);
+    const pendingWithdrawals = allWithdrawals?.filter(w => w.status === "pending").length || 0;
+
+    // Get all profiles for active accounts and balances
+    const { data: profiles } = await supabase
+      .from("profiles")
+      .select("balance, is_active");
+    
+    const activeAccounts = profiles?.filter(p => p.is_active).length || 0;
+    const totalAccountsBalance = profiles?.reduce((sum, p) => sum + Number(p.balance || 0), 0) || 0;
+
+    // Net income = Gross income - Withdrawals paid out
+    const netIncome = grossIncome - totalWithdrawalsAmount;
+    
+    // Profits = Gross income - Total user balances (money still owed to users)
+    const profits = grossIncome - totalAccountsBalance - totalWithdrawalsAmount;
+
+    setAnalytics({
+      grossIncome,
+      totalWithdrawals: totalWithdrawalsAmount,
+      netIncome,
+      profits,
+      totalTransactions,
+      pendingWithdrawals,
+      activeAccounts,
+      totalAccountsBalance,
+    });
   };
 
   const handleLogout = async () => {
@@ -279,7 +354,14 @@ const Admin = () => {
 
       <main className="container mx-auto px-4 py-8">
         {/* Tabs */}
-        <div className="flex gap-4 mb-8">
+        <div className="flex gap-4 mb-8 flex-wrap">
+          <Button
+            variant={activeTab === "analytics" ? "default" : "outline"}
+            onClick={() => setActiveTab("analytics")}
+          >
+            <BarChart3 className="h-4 w-4 mr-2" />
+            Analytics
+          </Button>
           <Button
             variant={activeTab === "tasks" ? "default" : "outline"}
             onClick={() => setActiveTab("tasks")}
@@ -295,6 +377,124 @@ const Admin = () => {
             Withdrawals ({withdrawals.filter(w => w.status === "pending").length})
           </Button>
         </div>
+
+        {activeTab === "analytics" && (
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-foreground">Dashboard Analytics</h2>
+            
+            {/* Main Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Gross Income */}
+              <div className="bg-background border border-border rounded-2xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="h-12 w-12 rounded-xl bg-green-500/10 flex items-center justify-center">
+                    <TrendingUp className="h-6 w-6 text-green-500" />
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground mb-1">Gross Income</p>
+                <p className="text-2xl font-bold text-foreground">
+                  {analytics.grossIncome.toLocaleString()} RWF
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">Total deposits received</p>
+              </div>
+
+              {/* Net Income */}
+              <div className="bg-background border border-border rounded-2xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="h-12 w-12 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                    <DollarSign className="h-6 w-6 text-blue-500" />
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground mb-1">Net Income</p>
+                <p className="text-2xl font-bold text-foreground">
+                  {analytics.netIncome.toLocaleString()} RWF
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">After withdrawals</p>
+              </div>
+
+              {/* Profits */}
+              <div className="bg-background border border-border rounded-2xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <PiggyBank className="h-6 w-6 text-primary" />
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground mb-1">Profits</p>
+                <p className="text-2xl font-bold text-foreground">
+                  {analytics.profits.toLocaleString()} RWF
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">Actual profit</p>
+              </div>
+
+              {/* Transactions */}
+              <div className="bg-background border border-border rounded-2xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="h-12 w-12 rounded-xl bg-orange-500/10 flex items-center justify-center">
+                    <ArrowUpDown className="h-6 w-6 text-orange-500" />
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground mb-1">Transactions</p>
+                <p className="text-2xl font-bold text-foreground">
+                  {analytics.totalTransactions}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">Total deposit attempts</p>
+              </div>
+            </div>
+
+            {/* Secondary Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Total Withdrawals */}
+              <div className="bg-background border border-border rounded-2xl p-6">
+                <div className="flex items-center gap-4">
+                  <div className="h-12 w-12 rounded-xl bg-red-500/10 flex items-center justify-center">
+                    <TrendingDown className="h-6 w-6 text-red-500" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Total Withdrawals</p>
+                    <p className="text-xl font-bold text-foreground">
+                      {analytics.totalWithdrawals.toLocaleString()} RWF
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {analytics.pendingWithdrawals} pending
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Active Accounts */}
+              <div className="bg-background border border-border rounded-2xl p-6">
+                <div className="flex items-center gap-4">
+                  <div className="h-12 w-12 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+                    <Users className="h-6 w-6 text-emerald-500" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Active Accounts</p>
+                    <p className="text-xl font-bold text-foreground">
+                      {analytics.activeAccounts}
+                    </p>
+                    <p className="text-xs text-muted-foreground">Users with deposits</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Total Accounts Balance */}
+              <div className="bg-background border border-border rounded-2xl p-6">
+                <div className="flex items-center gap-4">
+                  <div className="h-12 w-12 rounded-xl bg-purple-500/10 flex items-center justify-center">
+                    <Wallet className="h-6 w-6 text-purple-500" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Accounts Balance</p>
+                    <p className="text-xl font-bold text-foreground">
+                      {analytics.totalAccountsBalance.toLocaleString()} RWF
+                    </p>
+                    <p className="text-xs text-muted-foreground">Total user balances</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {activeTab === "tasks" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
