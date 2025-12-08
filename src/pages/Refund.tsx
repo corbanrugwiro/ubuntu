@@ -22,7 +22,7 @@ const Refund = () => {
               <section>
                 <h2 className="text-2xl font-semibold text-foreground mb-4">1. Entry Deposit Refunds</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  The initial 2,000 RWF entry deposit is non-refundable once your account has been activated. 
+                  The initial 3,000 RWF entry deposit is non-refundable once your account has been activated. 
                   This deposit activates your membership and referral capabilities on the Ubuntu platform.
                 </p>
               </section>

@@ -42,7 +42,7 @@ const Terms = () => {
                 </p>
                 <ul className="list-disc list-inside text-muted-foreground space-y-2">
                   <li>Create an account with accurate information</li>
-                  <li>Make an initial deposit of 2,000 RWF via MTN Mobile Money to activate your membership</li>
+                  <li>Make an initial deposit of 3,000 RWF via MTN Mobile Money to activate your membership</li>
                   <li>Maintain the security of your account credentials</li>
                   <li>Notify us immediately of any unauthorized access</li>
                 </ul>
