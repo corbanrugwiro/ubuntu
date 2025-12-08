@@ -31,7 +31,7 @@ const HeroSection = () => {
           {/* Subheadline */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-up opacity-0 stagger-2">
             Watch TikTok videos, follow Instagram accounts, and watch reels to earn money. 
-            Plus earn 20% commission for every friend you refer!
+            Plus earn 40% commission for every friend you refer!
           </p>
 
           {/* CTA Buttons */}
@@ -73,7 +73,7 @@ const HeroSection = () => {
                   <Users className="h-5 w-5 text-primary" />
                 </div>
               </div>
-              <p className="text-2xl font-bold text-foreground">20%</p>
+              <p className="text-2xl font-bold text-foreground">40%</p>
               <p className="text-xs text-muted-foreground">Referral Bonus</p>
             </div>
             <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-5">

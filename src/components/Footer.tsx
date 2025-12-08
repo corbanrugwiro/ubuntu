@@ -13,6 +13,9 @@ const Footer = () => {
       { name: "Privacy Policy", path: "/privacy" },
       { name: "Terms of Service", path: "/terms" },
       { name: "Refund Policy", path: "/refund" },
+      { name: "User Rights", path: "/user-rights" },
+      { name: "Disclaimer", path: "/disclaimer" },
+      { name: "Cookie Policy", path: "/cookie-policy" },
     ],
     support: [
       { name: "Help Center", path: "#" },

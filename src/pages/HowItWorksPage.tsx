@@ -27,7 +27,7 @@ const HowItWorksPage = () => {
     {
       icon: Wallet,
       title: "Earn Commissions",
-      description: "Receive 20% commission instantly for every person who joins using your referral code and completes their deposit.",
+      description: "Receive 40% commission instantly for every person who joins using your referral code and completes their deposit.",
       step: "04",
     },
     {
@@ -60,8 +60,8 @@ const HowItWorksPage = () => {
     {
       icon: Users,
       title: "Refer Friends",
-      description: "Share your unique referral code and earn 20% of every deposit made by your referrals.",
-      reward: "20% of deposits",
+      description: "Share your unique referral code and earn 40% of every deposit made by your referrals.",
+      reward: "40% of deposits",
     },
   ];
 

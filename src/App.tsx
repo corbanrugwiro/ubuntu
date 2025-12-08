@@ -10,6 +10,9 @@ import Dashboard from "./pages/Dashboard";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Refund from "./pages/Refund";
+import UserRights from "./pages/UserRights";
+import Disclaimer from "./pages/Disclaimer";
+import CookiePolicy from "./pages/CookiePolicy";
 import HowItWorksPage from "./pages/HowItWorksPage";
 import BenefitsPage from "./pages/BenefitsPage";
 import Admin from "./pages/Admin";
@@ -31,6 +34,9 @@ const App = () => (
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/refund" element={<Refund />} />
+          <Route path="/user-rights" element={<UserRights />} />
+          <Route path="/disclaimer" element={<Disclaimer />} />
+          <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/how-it-works" element={<HowItWorksPage />} />
           <Route path="/benefits" element={<BenefitsPage />} />
           <Route path="/admin" element={<Admin />} />

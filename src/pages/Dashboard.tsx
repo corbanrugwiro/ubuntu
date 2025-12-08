@@ -562,7 +562,7 @@ const Dashboard = () => {
                 Your Referral Link
               </h2>
               <p className="text-muted-foreground mb-6">
-                Share your unique referral link and earn 20% for every friend who joins and deposits!
+                Share your unique referral link and earn 40% for every friend who joins and deposits!
               </p>
 
               <div className="space-y-4">

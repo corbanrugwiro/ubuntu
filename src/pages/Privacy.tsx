@@ -35,6 +35,7 @@ const Privacy = () => {
                 <ul className="list-disc list-inside text-muted-foreground space-y-2">
                   <li>Create and manage your account</li>
                   <li>Process your transactions and referral commissions via MTN Mobile Money</li>
+                  <li>Process withdrawal requests (minimum withdrawal amount is 10,000 RWF)</li>
                   <li>Send you updates about your account and our services</li>
                   <li>Respond to your comments, questions, and requests</li>
                   <li>Detect and prevent fraud and abuse</li>

@@ -54,7 +54,7 @@ const Terms = () => {
                   Our referral program allows you to earn commissions by referring new users:
                 </p>
                 <ul className="list-disc list-inside text-muted-foreground space-y-2">
-                  <li>You earn 20% (400 RWF) of each successful referral's deposit</li>
+                  <li>You earn 40% of each successful referral's deposit</li>
                   <li>Commissions are credited after the referred user completes their deposit</li>
                   <li>Self-referrals are not permitted</li>
                   <li>Fraudulent referrals will result in account termination</li>
@@ -65,7 +65,7 @@ const Terms = () => {
                 <h2 className="text-2xl font-semibold text-foreground mb-4">5. Withdrawals</h2>
                 <p className="text-muted-foreground leading-relaxed">
                   You may withdraw your earnings at any time via MTN Mobile Money, subject to our withdrawal processing times 
-                  (typically 24 hours). Minimum withdrawal amount is 500 RWF. We reserve the right to verify 
+                  (typically 24 hours). Minimum withdrawal amount is 10,000 RWF. We reserve the right to verify 
                   your identity before processing withdrawals.
                 </p>
               </section>

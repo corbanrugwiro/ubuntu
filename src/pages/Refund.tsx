@@ -40,7 +40,7 @@ const Refund = () => {
                 <h2 className="text-2xl font-semibold text-foreground mb-4">3. Commission Withdrawals</h2>
                 <p className="text-muted-foreground leading-relaxed">
                   Earned commissions can be withdrawn at any time via MTN Mobile Money and are not subject to this refund policy. 
-                  Once a withdrawal is processed, it cannot be reversed.
+                  The minimum withdrawal amount is 10,000 RWF. Once a withdrawal is processed, it cannot be reversed.
                 </p>
               </section>
 

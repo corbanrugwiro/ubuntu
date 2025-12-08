@@ -19,7 +19,7 @@ const HowItWorks = () => {
     {
       icon: Share2,
       title: "Share Your Link",
-      description: "Get your unique referral code and share it with friends to earn 20% commission.",
+      description: "Get your unique referral code and share it with friends to earn 40% commission.",
       step: "03",
     },
     {

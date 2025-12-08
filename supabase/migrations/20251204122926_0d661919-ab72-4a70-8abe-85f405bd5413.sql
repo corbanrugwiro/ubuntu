@@ -147,7 +147,7 @@ BEGIN
       
       -- Credit referrer if exists
       IF user_profile.referred_by IS NOT NULL THEN
-        referral_amount := NEW.amount * 0.20; -- 20% commission
+        referral_amount := NEW.amount * 0.40; -- 40% commission
         
         -- Update referrer balance
         UPDATE public.profiles 
