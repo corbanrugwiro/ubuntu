@@ -45,6 +45,7 @@ interface Task {
   platform: string;
   link: string;
   reward_amount: number;
+  thumbnail_url: string | null;
 }
 
 interface TaskCompletion {
@@ -544,11 +545,19 @@ const Dashboard = () => {
                       } transition-colors`}
                     >
                       <div className="flex items-start gap-4">
-                        <div className={`h-12 w-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                          isCompleted ? "bg-green-500/10" : "bg-primary/10"
-                        }`}>
-                          {getPlatformIcon(task.platform)}
-                        </div>
+                        {task.thumbnail_url ? (
+                          <img 
+                            src={task.thumbnail_url} 
+                            alt={task.title}
+                            className="h-12 w-12 rounded-xl object-cover flex-shrink-0"
+                          />
+                        ) : (
+                          <div className={`h-12 w-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                            isCompleted ? "bg-green-500/10" : "bg-primary/10"
+                          }`}>
+                            {getPlatformIcon(task.platform)}
+                          </div>
+                        )}
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
                             <h3 className="font-semibold text-foreground">{task.title}</h3>
