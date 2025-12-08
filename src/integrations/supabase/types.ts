@@ -193,6 +193,7 @@ export type Database = {
           link: string
           platform: string
           reward_amount: number
+          thumbnail_url: string | null
           title: string
         }
         Insert: {
@@ -204,6 +205,7 @@ export type Database = {
           link: string
           platform: string
           reward_amount?: number
+          thumbnail_url?: string | null
           title: string
         }
         Update: {
@@ -215,6 +217,7 @@ export type Database = {
           link?: string
           platform?: string
           reward_amount?: number
+          thumbnail_url?: string | null
           title?: string
         }
         Relationships: []

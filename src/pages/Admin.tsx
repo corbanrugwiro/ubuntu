@@ -40,6 +40,7 @@ interface Task {
   reward_amount: number;
   is_active: boolean;
   created_at: string;
+  thumbnail_url: string | null;
 }
 
 interface WithdrawalRequest {
@@ -88,6 +89,8 @@ const Admin = () => {
     link: "",
     reward_amount: "50",
   });
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     checkAdminAccess();
@@ -210,7 +213,36 @@ const Admin = () => {
       return;
     }
 
+    setIsUploading(true);
     const { data: { session } } = await supabase.auth.getSession();
+
+    let thumbnailUrl: string | null = null;
+
+    // Upload thumbnail if provided
+    if (thumbnailFile) {
+      const fileExt = thumbnailFile.name.split('.').pop();
+      const fileName = `${crypto.randomUUID()}.${fileExt}`;
+      
+      const { error: uploadError } = await supabase.storage
+        .from('task-thumbnails')
+        .upload(fileName, thumbnailFile);
+
+      if (uploadError) {
+        toast({
+          title: "Upload Error",
+          description: uploadError.message,
+          variant: "destructive",
+        });
+        setIsUploading(false);
+        return;
+      }
+
+      const { data: urlData } = supabase.storage
+        .from('task-thumbnails')
+        .getPublicUrl(fileName);
+      
+      thumbnailUrl = urlData.publicUrl;
+    }
 
     const { error } = await supabase.from("tasks").insert({
       title: newTask.title,
@@ -219,6 +251,7 @@ const Admin = () => {
       link: newTask.link,
       reward_amount: parseFloat(newTask.reward_amount),
       created_by: session?.user.id,
+      thumbnail_url: thumbnailUrl,
     });
 
     if (error) {
@@ -227,6 +260,7 @@ const Admin = () => {
         description: error.message,
         variant: "destructive",
       });
+      setIsUploading(false);
       return;
     }
 
@@ -242,6 +276,8 @@ const Admin = () => {
       link: "",
       reward_amount: "50",
     });
+    setThumbnailFile(null);
+    setIsUploading(false);
 
     fetchData();
   };
@@ -564,9 +600,22 @@ const Admin = () => {
                   />
                 </div>
 
-                <Button className="w-full" onClick={handleCreateTask}>
+                <div className="space-y-2">
+                  <Label htmlFor="thumbnail">Thumbnail Image</Label>
+                  <Input
+                    id="thumbnail"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)}
+                  />
+                  {thumbnailFile && (
+                    <p className="text-xs text-muted-foreground">{thumbnailFile.name}</p>
+                  )}
+                </div>
+
+                <Button className="w-full" onClick={handleCreateTask} disabled={isUploading}>
                   <Plus className="h-4 w-4 mr-2" />
-                  Create Task
+                  {isUploading ? "Creating..." : "Create Task"}
                 </Button>
               </div>
             </div>
@@ -591,12 +640,20 @@ const Admin = () => {
                         task.is_active ? "bg-card border-border" : "bg-muted/50 border-muted"
                       }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <div className={`h-10 w-10 rounded-full flex items-center justify-center ${
-                          task.is_active ? "bg-primary/10" : "bg-muted"
-                        }`}>
-                          {getPlatformIcon(task.platform)}
-                        </div>
+                    <div className="flex items-center gap-3">
+                        {task.thumbnail_url ? (
+                          <img 
+                            src={task.thumbnail_url} 
+                            alt={task.title}
+                            className="h-10 w-10 rounded-lg object-cover"
+                          />
+                        ) : (
+                          <div className={`h-10 w-10 rounded-full flex items-center justify-center ${
+                            task.is_active ? "bg-primary/10" : "bg-muted"
+                          }`}>
+                            {getPlatformIcon(task.platform)}
+                          </div>
+                        )}
                         <div>
                           <p className={`font-medium ${task.is_active ? "text-foreground" : "text-muted-foreground"}`}>
                             {task.title}
