@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -60,6 +60,8 @@ const MIN_BALANCE = 3000;
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const referralFromUrl = searchParams.get("ref") || "";
   const [profile, setProfile] = useState<Profile | null>(null);
   const [referrals, setReferrals] = useState<ReferralEarning[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -104,6 +106,45 @@ const Dashboard = () => {
     } else if (profileData) {
       setProfile(profileData);
       setWithdrawPhone(profileData.phone || "");
+    } else if (!profileData && session.user) {
+      // Profile doesn't exist (Google OAuth user) - create one
+      let referrerId = null;
+      
+      // If there's a referral code, find the referrer
+      if (referralFromUrl) {
+        const { data: referrerData } = await supabase
+          .from("profiles")
+          .select("id")
+          .eq("referral_code", referralFromUrl)
+          .maybeSingle();
+        
+        if (referrerData) {
+          referrerId = referrerData.id;
+        }
+      }
+
+      // Generate a unique referral code
+      const { data: newReferralCode } = await supabase.rpc("generate_referral_code");
+      
+      // Create profile for Google OAuth user
+      const { data: newProfile, error: createError } = await supabase
+        .from("profiles")
+        .insert({
+          id: session.user.id,
+          email: session.user.email || "",
+          full_name: session.user.user_metadata?.full_name || session.user.user_metadata?.name || "User",
+          phone: session.user.phone || "",
+          referral_code: newReferralCode || `REF${Date.now()}`,
+          referred_by: referrerId,
+        })
+        .select()
+        .single();
+
+      if (createError) {
+        console.error("Error creating profile:", createError);
+      } else if (newProfile) {
+        setProfile(newProfile);
+      }
     }
 
     // Fetch referral earnings
