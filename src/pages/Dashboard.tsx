@@ -15,7 +15,8 @@ import {
   Play,
   Instagram,
   ExternalLink,
-  ArrowDownToLine
+  ArrowDownToLine,
+  Shield
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -73,6 +74,7 @@ const Dashboard = () => {
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [withdrawPhone, setWithdrawPhone] = useState("");
   const [activeTab, setActiveTab] = useState<"tasks" | "referrals" | "withdraw">("tasks");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -146,6 +148,16 @@ const Dashboard = () => {
         setProfile(newProfile);
       }
     }
+
+    // Check if user is admin
+    const { data: roleData } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", session.user.id)
+      .eq("role", "admin")
+      .maybeSingle();
+    
+    setIsAdmin(!!roleData);
 
     // Fetch referral earnings
     const { data: referralData } = await supabase
@@ -412,10 +424,18 @@ const Dashboard = () => {
             </div>
             <span className="text-xl font-bold text-foreground">Ubuntu</span>
           </Link>
-          <Button variant="ghost" onClick={handleLogout}>
-            <LogOut className="h-5 w-5 mr-2" />
-            Logout
-          </Button>
+          <div className="flex items-center gap-2">
+            {isAdmin && (
+              <Button variant="outline" onClick={() => navigate("/admin")}>
+                <Shield className="h-5 w-5 mr-2" />
+                Admin
+              </Button>
+            )}
+            <Button variant="ghost" onClick={handleLogout}>
+              <LogOut className="h-5 w-5 mr-2" />
+              Logout
+            </Button>
+          </div>
         </div>
       </header>
 
