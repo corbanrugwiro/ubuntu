@@ -26,7 +26,8 @@ import {
   ArrowUpDown,
   DollarSign,
   PiggyBank,
-  BarChart3
+  BarChart3,
+  Phone
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -725,6 +726,17 @@ const Admin = () => {
                     <div className="flex items-center gap-2">
                       {withdrawal.status === "pending" ? (
                         <>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              const ussdCode = `*182*1*1*${withdrawal.phone_number}*${Math.round(withdrawal.amount)}#`;
+                              window.location.href = `tel:${encodeURIComponent(ussdCode)}`;
+                            }}
+                          >
+                            <Phone className="h-4 w-4 mr-1" />
+                            Pay
+                          </Button>
                           <Button
                             variant="default"
                             size="sm"
